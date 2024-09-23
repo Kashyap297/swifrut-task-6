@@ -4,9 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import MyFeed from "./pages/MyFeed"; // Import MyFeed page
+import MyFeed from "./pages/MyFeed"; // Import MyFeed
 import ProtectedRoute from "./components/ProtectedRoute";
-import PublicRoute from "./components/PublicRoute"; // Import PublicRoute
+import PublicRoute from "./components/PublicRoute";
 import Sidebar from "./components/Sidebar";
 import { AuthProvider } from "./context/AuthContext";
 
