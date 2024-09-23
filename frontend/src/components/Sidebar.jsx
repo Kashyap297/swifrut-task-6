@@ -16,6 +16,9 @@ const Sidebar = () => {
     <div className="h-screen w-64 bg-gray-800 text-white flex flex-col">
       <div className="py-4 px-6 text-2xl font-bold">Recipe App</div>
       <nav className="flex flex-col mt-8 space-y-4 px-6">
+        <Link to="/" className="hover:bg-gray-700 py-2 px-4 rounded">
+          Browse All Recipes
+        </Link>
         {!user ? (
           <>
             <Link to="/login" className="hover:bg-gray-700 py-2 px-4 rounded">
@@ -30,9 +33,6 @@ const Sidebar = () => {
           </>
         ) : (
           <>
-            <Link to="/browse" className="hover:bg-gray-700 py-2 px-4 rounded">
-              Browse All Recipes
-            </Link>
             <Link to="/myfeed" className="hover:bg-gray-700 py-2 px-4 rounded">
               My Feed
             </Link>
