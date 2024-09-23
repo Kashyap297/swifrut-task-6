@@ -97,7 +97,15 @@ const deleteRecipe = async (req, res) => {
 };
 const getUserRecipes = async (req, res) => {
   try {
+    // Find recipes created by the logged-in user
     const userRecipes = await Recipe.find({ author: req.user.id });
+
+    if (!userRecipes.length) {
+      return res
+        .status(404)
+        .json({ message: "No recipes found for this user" });
+    }
+
     res.status(200).json(userRecipes);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving user's recipes" });
