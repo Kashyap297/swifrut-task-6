@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import MyFeed from "./pages/MyFeed"; // Import MyFeed page
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute"; // Import PublicRoute
 import Sidebar from "./components/Sidebar";
@@ -37,6 +38,14 @@ function App() {
             />
 
             {/* Protected routes */}
+            <Route
+              path="/myfeed"
+              element={
+                <ProtectedRoute>
+                  <MyFeed />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/protected"
               element={
