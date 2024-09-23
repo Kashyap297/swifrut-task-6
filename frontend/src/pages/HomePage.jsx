@@ -1,7 +1,7 @@
-// src/pages/HomePage.jsx
 import React, { useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import api from "../api/api"; // Axios instance for API calls
+import { FiSearch } from "react-icons/fi"; // Importing a search icon from react-icons
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -25,7 +25,7 @@ const HomePage = () => {
 
     fetchRecipes();
   }, []);
-console.log(recipes)
+
   // Handle search input changes
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
@@ -47,21 +47,29 @@ console.log(recipes)
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">All Recipes</h1>
+    <div className="container mx-auto p-6">
+      {/* Search Bar */}
 
-      {/* Search bar for filtering */}
-      <div className="mb-6">
+      {/* Favorite Cuisines Section */}
+      <h2 className="text-5xl font-bold text-center text-gray-700 mb-7">
+        What are your favorite cuisines?
+      </h2>
+      <div className="relative mb-8">
         <input
           type="text"
-          placeholder="Search by ingredients or cuisine type"
+          placeholder="Search 2M+ Recipes"
           value={searchTerm}
           onChange={handleSearch}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full py-3 pl-10 pr-4 text-lg ring-2 ring-red-500 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+        <FiSearch
+          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+          size={24}
         />
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Recipes Section */}
+      <h3 className="text-xl font-semibold mb-4">Just for you</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredRecipes.length > 0 ? (
           filteredRecipes.map((recipe) => (
             <RecipeCard key={recipe._id} recipe={recipe} />
