@@ -1,21 +1,20 @@
-// src/pages/MyFeed.jsx
 import React, { useState, useEffect, useContext } from "react";
-import api from "../api/api"; // Axios instance for making API requests
+import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 import { AuthContext } from "../context/AuthContext";
 
 const MyFeed = () => {
-  const { user } = useContext(AuthContext); // Get the logged-in user
+  const { user } = useContext(AuthContext);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMyRecipes = async () => {
       try {
         const response = await api.get("/recipes/myrecipes", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }); // Fetch the user's specific recipes
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
         setRecipes(response.data);
         setLoading(false);
       } catch (error) {
@@ -26,6 +25,21 @@ const MyFeed = () => {
 
     fetchMyRecipes();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/recipes/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      setRecipes(recipes.filter((recipe) => recipe._id !== id)); // Remove the deleted recipe from UI
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+    }
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/edit-recipe/${id}`); // Redirect to edit page
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -54,6 +68,22 @@ const MyFeed = () => {
               <p className="text-gray-600">
                 <strong>Instructions:</strong> {recipe.instructions}
               </p>
+
+              {/* Edit and Delete Buttons */}
+              <div className="mt-4">
+                <button
+                  onClick={() => handleEdit(recipe._id)}
+                  className="bg-yellow-500 text-white px-4 py-2 mr-2"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(recipe._id)}
+                  className="bg-red-500 text-white px-4 py-2"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))
         ) : (

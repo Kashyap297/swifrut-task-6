@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import Sidebar from "./components/Sidebar";
 import { AuthProvider } from "./context/AuthContext";
+import UploadRecipe from "./pages/UploadRecipe";
+import EditRecipe from "./pages/EditRecipe";
 
 function App() {
   return (
@@ -45,6 +47,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <MyFeed />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/upload-recipe"
+              element={
+                <ProtectedRoute>
+                  <UploadRecipe />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-recipe/:id"
+              element={
+                <ProtectedRoute>
+                  <EditRecipe />
                 </ProtectedRoute>
               }
             />

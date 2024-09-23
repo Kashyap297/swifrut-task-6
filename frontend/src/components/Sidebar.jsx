@@ -1,11 +1,11 @@
-// src/components/Sidebar.jsx
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Sidebar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Track dropdown state
 
   const handleLogout = () => {
     logout();
@@ -28,6 +28,37 @@ const Sidebar = () => {
           Browse All Recipes
         </Link>
 
+        {/* Dropdown for Recipes */}
+        {user && (
+          <div>
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="hover:bg-gray-700 py-2 px-4 rounded w-full text-left flex justify-between items-center"
+            >
+              Recipes
+              <span>{isDropdownOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {/* Dropdown Content */}
+            {isDropdownOpen && (
+              <div className="ml-4 space-y-2">
+                <Link
+                  to="/myfeed"
+                  className="hover:bg-gray-700 py-2 px-4 rounded block"
+                >
+                  My Feed
+                </Link>
+                <Link
+                  to="/upload-recipe"
+                  className="hover:bg-gray-700 py-2 px-4 rounded block"
+                >
+                  Upload Recipe
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
+
         {!user ? (
           <>
             <Link to="/login" className="hover:bg-gray-700 py-2 px-4 rounded">
@@ -42,9 +73,6 @@ const Sidebar = () => {
           </>
         ) : (
           <>
-            <Link to="/myfeed" className="hover:bg-gray-700 py-2 px-4 rounded">
-              My Feed
-            </Link>
             <button
               onClick={handleLogout}
               className="hover:bg-gray-700 py-2 px-4 rounded"
