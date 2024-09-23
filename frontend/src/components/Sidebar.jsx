@@ -1,28 +1,28 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import {
+  FaChevronUp,
+  FaChevronDown,
   FaUserCircle,
   FaHome,
-  FaChartBar,
   FaCog,
   FaQuestionCircle,
   FaSignOutAlt,
-} from "react-icons/fa"; // Import icons
+} from "react-icons/fa";
 
 const Sidebar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Track dropdown state
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
-    navigate("/login"); // Redirect to login page after logout
+    navigate("/login");
   };
 
   return (
-    <div className="h-screen w-64 bg-gray-50 flex flex-col justify-between shadow-lg">
+    <div className="h-screen w-64 bg-gray-900 text-white flex flex-col justify-between shadow-lg">
       {/* User Info */}
       <div className="flex flex-col items-center px-4 py-6">
         <FaUserCircle size={80} className="text-gray-400 mb-4" />
@@ -39,36 +39,40 @@ const Sidebar = () => {
           <li>
             <Link
               to="/"
-              className="flex items-center space-x-4 text-gray-700 hover:text-gray-900"
+              className="flex items-center space-x-4 text-gray-400 hover:text-white"
             >
               <FaHome size={20} />
               <span className="text-md">Browse Recipes</span>
             </Link>
           </li>
 
-          {/* Dropdown for Viewers */}
+          {/* Dropdown for Profile */}
           <li
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)} // Move the onClick to the li element
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="cursor-pointer"
           >
-            <div className="flex justify-between items-center space-x-4 text-gray-700 hover:text-gray-900">
+            <div className="flex justify-between items-center space-x-4 text-gray-400 hover:text-white">
               <div className="flex items-center space-x-4">
                 <FaUserCircle size={20} />
                 <span className="text-md">My Profile</span>
               </div>
               {isDropdownOpen ? (
-                <FaChevronUp size={16} /> // Replacing ▲ with FaChevronUp
+                <FaChevronUp size={16} />
               ) : (
-                <FaChevronDown size={16} /> // Replacing ▼ with FaChevronDown
+                <FaChevronDown size={16} />
               )}
             </div>
             {isDropdownOpen && (
-              <ul className="ml-8 space-y-2 text-gray-600 mt-3">
+              <ul className="ml-8 space-y-2 text-gray-500 mt-3">
                 <li>
-                  <Link to="/myfeed">My Feed</Link>
+                  <Link to="/myfeed" className="hover:text-white">
+                    My Feed
+                  </Link>
                 </li>
                 <li className="mt-2">
-                  <Link to="/upload-recipe">Upload Recipe</Link>
+                  <Link to="/upload-recipe" className="hover:text-white">
+                    Upload Recipe
+                  </Link>
                 </li>
               </ul>
             )}
@@ -82,7 +86,7 @@ const Sidebar = () => {
           <li>
             <Link
               to="/"
-              className="flex items-center space-x-4 text-gray-700 hover:text-gray-900"
+              className="flex items-center space-x-4 text-gray-400 hover:text-white"
             >
               <FaCog size={20} />
               <span className="text-md">Settings</span>
@@ -92,7 +96,7 @@ const Sidebar = () => {
           <li>
             <Link
               to="/"
-              className="flex items-center space-x-4 text-gray-700 hover:text-gray-900"
+              className="flex items-center space-x-4 text-gray-400 hover:text-white"
             >
               <FaQuestionCircle size={20} />
               <span className="text-md">FAQ</span>
@@ -102,7 +106,7 @@ const Sidebar = () => {
           <li className="pb-5">
             <button
               onClick={handleLogout}
-              className="flex items-center space-x-4 text-gray-700 hover:text-gray-900 w-full"
+              className="flex items-center space-x-4 text-gray-400 hover:text-white w-full"
             >
               <FaSignOutAlt size={20} />
               <span className="text-md">Logout</span>
