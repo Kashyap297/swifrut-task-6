@@ -3,6 +3,7 @@ const dbConnection = require("./config/db");
 const Config = require("./config");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
+const recipeRoutes = require("./routes/recipeRoutes");
 
 const app = express();
 
@@ -18,6 +19,7 @@ dbConnection();
 
 // api routes
 app.use("/api/users", userRoutes);
+app.use("/api/recipes", recipeRoutes);
 
 app.listen(PORT, (err) => {
   if (err) {
