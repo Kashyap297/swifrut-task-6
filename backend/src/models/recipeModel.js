@@ -21,6 +21,10 @@ const recipeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  imageUrl: {
+    type: String, // Store image file path
+    default: null,
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

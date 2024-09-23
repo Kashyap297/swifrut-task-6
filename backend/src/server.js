@@ -4,6 +4,7 @@ const Config = require("./config");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const recipeRoutes = require("./routes/recipeRoutes");
+const path = require("path");
 
 const app = express();
 
@@ -13,6 +14,9 @@ const PORT = Config.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+
+// Serve static files from the uploads directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // dbConnection
 dbConnection();
