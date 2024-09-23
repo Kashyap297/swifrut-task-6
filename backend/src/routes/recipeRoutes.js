@@ -5,6 +5,7 @@ const {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  getUserRecipes,
 } = require("../controllers/recipeController");
 const { protect } = require("../middlewares/authMiddleware");
 
@@ -13,6 +14,9 @@ const router = express.Router();
 // Create a new recipe and get all recipes
 router.post("/", protect, createRecipe);
 router.get("/", getRecipes);
+
+// Get user-specific recipes
+router.get("/myrecipes", protect, getUserRecipes); // New route for user's recipes
 
 // Get, update, and delete a recipe by ID
 router.get("/:id", getRecipeById);

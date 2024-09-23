@@ -95,6 +95,14 @@ const deleteRecipe = async (req, res) => {
     res.status(500).json({ message: "Error deleting recipe" });
   }
 };
+const getUserRecipes = async (req, res) => {
+  try {
+    const userRecipes = await Recipe.find({ author: req.user.id });
+    res.status(200).json(userRecipes);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving user's recipes" });
+  }
+};
 
 module.exports = {
   createRecipe,
@@ -102,4 +110,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  getUserRecipes,
 };
