@@ -15,10 +15,19 @@ const Sidebar = () => {
   return (
     <div className="h-screen w-64 bg-gray-800 text-white flex flex-col">
       <div className="py-4 px-6 text-2xl font-bold">Recipe App</div>
+
       <nav className="flex flex-col mt-8 space-y-4 px-6">
+        {/* Display the logged-in user's name */}
+        {user && (
+          <div className="text-sm py-2 px-4 text-gray-300">
+            Welcome, {user.username}!
+          </div>
+        )}
+
         <Link to="/" className="hover:bg-gray-700 py-2 px-4 rounded">
           Browse All Recipes
         </Link>
+
         {!user ? (
           <>
             <Link to="/login" className="hover:bg-gray-700 py-2 px-4 rounded">

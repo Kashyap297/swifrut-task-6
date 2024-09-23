@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import RecipeDetails from "./pages/RecipeDetails"; // Import RecipeDetails
 import MyFeed from "./pages/MyFeed"; // Import MyFeed
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -18,7 +19,9 @@ function App() {
         <div className="flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />} />
-
+            {/* Public route for viewing recipe details */}
+            <Route path="/recipes/:id" element={<RecipeDetails />} />{" "}
+            {/* Add this route */}
             {/* Public routes (Login and Register) */}
             <Route
               path="/login"
@@ -36,7 +39,6 @@ function App() {
                 </PublicRoute>
               }
             />
-
             {/* Protected routes */}
             <Route
               path="/myfeed"
