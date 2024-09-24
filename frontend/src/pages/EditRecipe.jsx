@@ -1,4 +1,3 @@
-// src/pages/EditRecipe.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/api"; // Axios instance for API requests
@@ -12,6 +11,7 @@ const EditRecipe = () => {
     cuisineType: "",
     cookingTime: "",
   });
+  const [image, setImage] = useState(null); // State for image file
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -35,11 +35,23 @@ const EditRecipe = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/recipes/${id}`, recipe, {
+      const formData = new FormData();
+      formData.append("title", recipe.title);
+      formData.append("ingredients", recipe.ingredients);
+      formData.append("instructions", recipe.instructions);
+      formData.append("cuisineType", recipe.cuisineType);
+      formData.append("cookingTime", recipe.cookingTime);
+      if (image) {
+        formData.append("image", image); // Append image if a new image is selected
+      }
+
+      await api.put(`/recipes/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
         },
       });
+
       navigate("/myfeed"); // Redirect to MyFeed after successful update
     } catch (error) {
       setError("Failed to update the recipe.");
@@ -52,6 +64,11 @@ const EditRecipe = () => {
       ...recipe,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Handle image file changes
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]); // Store the selected image file
   };
 
   if (loading) {
@@ -126,6 +143,15 @@ const EditRecipe = () => {
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded"
             required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Upload New Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange} // Handle image file change
+            className="w-full border px-4 py-2"
           />
         </div>
         <button

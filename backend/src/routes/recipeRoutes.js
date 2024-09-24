@@ -5,6 +5,7 @@ const {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  getUserRecipes,
 } = require("../controllers/recipeController");
 
 const { protect } = require("../middlewares/authMiddleware");
@@ -17,6 +18,8 @@ router.post("/", protect, upload.single("image"), createRecipe);
 
 // Get all recipes
 router.get("/", getRecipes);
+
+router.get("/myrecipes", protect, getUserRecipes);
 
 // Get, update, and delete a recipe by ID
 router.get("/:id", getRecipeById);

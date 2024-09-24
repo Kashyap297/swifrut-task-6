@@ -8,28 +8,38 @@ const UploadRecipe = () => {
   const [instructions, setInstructions] = useState("");
   const [cuisineType, setCuisineType] = useState("");
   const [cookingTime, setCookingTime] = useState("");
+  const [image, setImage] = useState(null); // State for image file
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]); // Store the selected file in state
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post(
-        "/recipes",
-        {
-          title,
-          ingredients: ingredients.split(",").map((item) => item.trim()), // Convert comma-separated ingredients to array
-          instructions,
-          cuisineType,
-          cookingTime,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+      const formData = new FormData(); // Create FormData to handle file upload
+      formData.append("title", title);
+      formData.append(
+        "ingredients",
+        ingredients.split(",").map((item) => item.trim())
       );
-      navigate("/myfeed"); // Redirect to My Feed after successful creation
+      formData.append("instructions", instructions);
+      formData.append("cuisineType", cuisineType);
+      formData.append("cookingTime", cookingTime);
+      if (image) {
+        formData.append("image", image); // Add image to FormData if available
+      }
+
+      await api.post("/recipes", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data", // Important for file uploads
+        },
+      });
+
+      navigate("/"); // Redirect to My Feed after successful creation
     } catch (error) {
       setError("Error creating recipe");
     }
@@ -89,6 +99,15 @@ const UploadRecipe = () => {
             onChange={(e) => setCookingTime(e.target.value)}
             className="w-full border px-4 py-2"
             required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Upload Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange} // Handle image file change
+            className="w-full border px-4 py-2"
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2">

@@ -1,7 +1,6 @@
-// src/pages/RecipeDetails.jsx
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import api from "../api/api"; // Axios instance for API calls
+import api, { BASE_URL } from "../api/api"; // Import BASE_URL along with api
 
 const RecipeDetails = () => {
   const { id } = useParams(); // Get recipe ID from URL
@@ -33,6 +32,14 @@ const RecipeDetails = () => {
 
   return (
     <div className="container mx-auto p-4">
+      {/* Render the image if available */}
+      {recipe.imageUrl && (
+        <img
+          src={`${BASE_URL}${recipe.imageUrl}`} // Use the BASE_URL from api.js
+          alt={recipe.title}
+          className="w-full h-64 object-cover rounded-lg mb-4"
+        />
+      )}
       <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
       <p>
         <strong>Cuisine Type:</strong> {recipe.cuisineType}
