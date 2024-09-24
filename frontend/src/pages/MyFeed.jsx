@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/api";
+import api, { BASE_URL } from "../api/api"; // Import BASE_URL
 import { AuthContext } from "../context/AuthContext";
 
 const MyFeed = () => {
@@ -55,6 +55,15 @@ const MyFeed = () => {
               key={recipe._id}
               className="bg-white shadow-md rounded-lg p-4 mb-4"
             >
+              {/* Render the image if available */}
+              {recipe.imageUrl && (
+                <img
+                  src={`${BASE_URL}${recipe.imageUrl}`} // Use the BASE_URL from api.js
+                  alt={recipe.title}
+                  className="w-full h-48 object-cover rounded-t-md mb-4"
+                />
+              )}
+
               <h2 className="text-xl font-bold mb-2">{recipe.title}</h2>
               <p className="text-gray-600">
                 <strong>Cuisine Type:</strong> {recipe.cuisineType}
